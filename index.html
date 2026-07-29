@@ -1,0 +1,758 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Don Ferruccio - Authentic Italian food delivery. Traditional family recipes delivered to your door.">
+  <title>Don Ferruccio - Authentic Italian Delivery</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --terracotta: #C65D3B;
+      --terracotta-dark: #A0482E;
+      --cream: #FDF8F3;
+      --cream-dark: #F5EDE3;
+      --sage: #7A9E7E;
+      --sage-dark: #5D7A60;
+      --deep-red: #8B2D2D;
+      --text: #2D2D2D;
+      --text-light: #6B6B6B;
+      --white: #FFFFFF;
+      --shadow: 0 4px 24px rgba(0,0,0,0.08);
+      --shadow-hover: 0 8px 32px rgba(0,0,0,0.12);
+      --radius: 12px;
+      --radius-sm: 8px;
+      --transition: 0.2s ease;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--cream);
+      color: var(--text);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .font-serif { font-family: 'Playfair Display', Georgia, serif; }
+
+    /* Layout */
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+
+    /* Header */
+    header {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      background: rgba(253, 248, 243, 0.95);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--cream-dark);
+      z-index: 100;
+      transition: var(--transition);
+    }
+
+    header.scrolled { box-shadow: var(--shadow); }
+
+    .header-inner {
+      display: flex; align-items: center; justify-content: space-between;
+      height: 72px;
+    }
+
+    .logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: var(--terracotta);
+      text-decoration: none;
+      letter-spacing: -0.02em;
+    }
+
+    .logo span { color: var(--deep-red); }
+
+    nav ul { display: flex; gap: 32px; list-style: none; }
+
+    nav a {
+      color: var(--text);
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 0.95rem;
+      transition: var(--transition);
+      position: relative;
+    }
+
+    nav a::after {
+      content: ''; position: absolute; bottom: -4px; left: 0; right: 0;
+      height: 2px; background: var(--terracotta);
+      transform: scaleX(0); transform-origin: right;
+      transition: transform var(--transition);
+    }
+
+    nav a:hover::after { transform: scaleX(1); transform-origin: left; }
+    nav a:hover { color: var(--terracotta); }
+
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+      padding: 14px 28px; border-radius: var(--radius);
+      font-weight: 600; font-size: 0.95rem;
+      text-decoration: none; border: none; cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .btn-primary {
+      background: var(--terracotta); color: var(--white);
+    }
+
+    .btn-primary:hover { background: var(--terracotta-dark); transform: translateY(-2px); box-shadow: var(--shadow-hover); }
+
+    .btn-secondary {
+      background: transparent; color: var(--terracotta);
+      border: 2px solid var(--terracotta);
+    }
+
+    .btn-secondary:hover { background: var(--terracotta); color: var(--white); }
+
+    .mobile-menu-btn { display: none; background: none; border: none; font-size: 1.5rem; color: var(--text); cursor: pointer; }
+
+    /* Hero */
+    .hero {
+      min-height: 100vh;
+      display: flex; align-items: center;
+      padding: 120px 24px 80px;
+      background: linear-gradient(180deg, var(--cream) 0%, var(--cream-dark) 100%);
+      position: relative; overflow: hidden;
+    }
+
+    .hero::before {
+      content: ''; position: absolute; top: -50%; right: -20%;
+      width: 600px; height: 600px;
+      background: radial-gradient(ellipse, rgba(198, 93, 59, 0.08) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero-content { max-width: 600px; position: relative; z-index: 1; }
+
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: var(--white); border: 1px solid var(--cream-dark);
+      padding: 8px 16px; border-radius: 100px;
+      font-size: 0.85rem; font-weight: 500; color: var(--terracotta);
+      margin-bottom: 24px;
+    }
+
+    .hero h1 {
+      font-size: clamp(2.5rem, 5vw, 4rem);
+      font-weight: 600; line-height: 1.15;
+      letter-spacing: -0.03em; margin-bottom: 20px;
+    }
+
+    .hero p {
+      font-size: 1.15rem; color: var(--text-light);
+      margin-bottom: 32px; max-width: 480px;
+    }
+
+    .hero-actions { display: flex; gap: 16px; flex-wrap: wrap; }
+
+    /* Sections */
+    section { padding: 100px 0; }
+
+    .section-header { text-align: center; margin-bottom: 60px; }
+
+    .section-tag {
+      display: inline-block; font-size: 0.8rem; font-weight: 600;
+      text-transform: uppercase; letter-spacing: 0.1em;
+      color: var(--terracotta); margin-bottom: 12px;
+    }
+
+    .section-header h2 {
+      font-size: clamp(2rem, 4vw, 2.75rem);
+      font-weight: 600; letter-spacing: -0.02em;
+    }
+
+    /* Menu */
+    .menu-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 24px; }
+
+    .menu-category { background: var(--white); border-radius: var(--radius); padding: 32px; box-shadow: var(--shadow); transition: var(--transition); }
+
+    .menu-category:hover { box-shadow: var(--shadow-hover); transform: translateY(-4px); }
+
+    .category-title {
+      display: flex; align-items: center; gap: 12px;
+      font-size: 1.25rem; font-weight: 600; color: var(--deep-red);
+      margin-bottom: 24px; padding-bottom: 16px;
+      border-bottom: 1px solid var(--cream-dark);
+    }
+
+    .category-icon { width: 40px; height: 40px; background: var(--cream); border-radius: var(--radius-sm); display: flex; align-items: center; justify-content: center; color: var(--terracotta); }
+
+    .menu-item { display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; padding: 16px 0; border-bottom: 1px dashed var(--cream-dark); }
+
+    .menu-item:last-child { border-bottom: none; }
+
+    .item-info { flex: 1; }
+
+    .item-name { font-weight: 600; font-size: 1.05rem; margin-bottom: 4px; }
+
+    .item-desc { font-size: 0.9rem; color: var(--text-light); }
+
+    .item-price { font-weight: 700; font-size: 1.1rem; color: var(--terracotta); white-space: nowrap; }
+
+    /* Features */
+    .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 24px; }
+
+    .feature-card { background: var(--white); border-radius: var(--radius); padding: 32px; text-align: center; box-shadow: var(--shadow); transition: var(--transition); }
+
+    .feature-card:hover { box-shadow: var(--shadow-hover); transform: translateY(-4px); }
+
+    .feature-icon { width: 64px; height: 64px; margin: 0 auto 20px; background: var(--cream); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--terracotta); font-size: 1.5rem; }
+
+    .feature-card h3 { font-size: 1.2rem; font-weight: 600; margin-bottom: 12px; }
+
+    .feature-card p { color: var(--text-light); font-size: 0.95rem; }
+
+    /* CTA */
+    .cta { background: var(--deep-red); border-radius: var(--radius); padding: 60px 40px; text-align: center; color: var(--white); position: relative; overflow: hidden; }
+
+    .cta::before { content: ''; position: absolute; top: -50%; left: -20%; width: 140%; height: 140%; background: radial-gradient(ellipse, rgba(198, 93, 59, 0.2) 0%, transparent 60%); }
+
+    .cta-content { position: relative; z-index: 1; max-width: 500px; margin: 0 auto; }
+
+    .cta h2 { font-size: clamp(1.75rem, 3.5vw, 2.5rem); font-weight: 600; margin-bottom: 16px; }
+
+    .cta p { opacity: 0.9; margin-bottom: 28px; font-size: 1.1rem; }
+
+    .cta .btn-primary { background: var(--terracotta); border-color: var(--terracotta); }
+
+    .cta .btn-primary:hover { background: var(--white); color: var(--deep-red); }
+
+    /* Footer */
+    footer { background: var(--text); color: var(--white); padding: 60px 0 30px; }
+
+    .footer-grid { display: grid; grid-template-columns: 2fr repeat(3, 1fr); gap: 40px; margin-bottom: 40px; }
+
+    .footer-brand .logo { color: var(--white); font-size: 1.75rem; display: block; margin-bottom: 16px; }
+
+    .footer-brand p { color: rgba(255,255,255,0.6); font-size: 0.95rem; max-width: 280px; }
+
+    .footer-col h4 { font-size: 0.9rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; color: var(--terracotta); margin-bottom: 16px; }
+
+    .footer-col ul { list-style: none; }
+
+    .footer-col li { margin-bottom: 10px; }
+
+    .footer-col a { color: rgba(255,255,255,0.7); text-decoration: none; font-size: 0.95rem; transition: var(--transition); }
+
+    .footer-col a:hover { color: var(--terracotta); }
+
+    .footer-bottom { padding-top: 30px; border-top: 1px solid rgba(255,255,255,0.1); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; }
+
+    .footer-bottom p { color: rgba(255,255,255,0.5); font-size: 0.85rem; }
+
+    .social-links { display: flex; gap: 16px; }
+
+    .social-links a { width: 40px; height: 40px; border-radius: 50%; background: rgba(255,255,255,0.1); display: flex; align-items: center; justify-content: center; color: var(--white); transition: var(--transition); }
+
+    .social-links a:hover { background: var(--terracotta); transform: translateY(-2px); }
+
+    /* Mobile */
+    @media (max-width: 768px) {
+      .mobile-menu-btn { display: block; }
+
+      nav { position: fixed; top: 72px; left: 0; right: 0; background: var(--white); padding: 24px; flex-direction: column; border-bottom: 1px solid var(--cream-dark); box-shadow: var(--shadow); transform: translateY(-100%); opacity: 0; visibility: hidden; transition: var(--transition); }
+
+      nav.open { transform: translateY(0); opacity: 1; visibility: visible; }
+
+      nav ul { flex-direction: column; gap: 0; }
+
+      nav li { border-bottom: 1px solid var(--cream-dark); }
+
+      nav a { display: block; padding: 16px 0; }
+
+      .footer-grid { grid-template-columns: 1fr 1fr; gap: 32px; }
+
+      .footer-brand { grid-column: 1 / -1; }
+
+      .hero { padding: 100px 24px 60px; min-height: auto; }
+    }
+
+    @media (max-width: 480px) {
+      .footer-grid { grid-template-columns: 1fr; }
+      .footer-bottom { flex-direction: column; text-align: center; }
+    }
+
+    /* Animations */
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+    .animate-in { animation: fadeUp 0.6s ease forwards; opacity: 0; }
+
+    .delay-1 { animation-delay: 0.1s; }
+    .delay-2 { animation-delay: 0.2s; }
+    .delay-3 { animation-delay: 0.3s; }
+    .delay-4 { animation-delay: 0.4s; }
+  </style>
+</head>
+<body>
+  <header id="header">
+    <div class="container header-inner">
+      <a href="#" class="logo">Don <span>Ferruccio</span></a>
+      <nav id="nav">
+        <ul>
+          <li><a href="#menu">Menu</a></li>
+          <li><a href="#about">Our Story</a></li>
+          <li><a href="#delivery">Delivery</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </nav>
+      <a href="#order" class="btn btn-primary">Order Now</a>
+      <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle menu">☰</button>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="container">
+        <div class="hero-content">
+          <div class="hero-badge animate-in">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+            Now Delivering in Central Rome
+          </div>
+          <h1 id="hero-title" class="font-serif animate-in delay-1">Authentic Italian, Delivered to Your Door</h1>
+          <p class="animate-in delay-2">Traditional family recipes, 24-hour fermented dough, San Marzano tomatoes, and the warmth of Nonna's kitchen — brought straight to your table.</p>
+          <div class="hero-actions animate-in delay-3">
+            <a href="#menu" class="btn btn-primary">View Menu</a>
+            <a href="#order" class="btn btn-secondary">Order Now</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="menu" aria-labelledby="menu-title">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-tag">Our Menu</span>
+          <h2 id="menu-title" class="font-serif">Handcrafted with Love</h2>
+        </div>
+        <div class="menu-grid">
+          <article class="menu-category">
+            <div class="category-title">
+              <div class="category-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+              </div>
+              Pizza Rossa
+            </div>
+            <div class="menu-item">
+              <div class="item-info">
+                <div class="item-name">Margherita</div>
+                <div class="item-desc">San Marzano tomato, fior di latte, basil, EVOO</div>
+              </div>
+              <div class="item-price">€10.00</div>
+            </div>
+            <div class="menu-item">
+              <div class="item-info">
+                <div class="item-name">Marinara</div>
+                <div class="item-desc">San Marzano tomato, garlic, oregano, EVOO</div>
+              </div>
+              <div class="item-price">€9.00</div>
+            </div>
+            <div class="menu-item">
+              <div class="item-info">
+                <div class="item-name">Diavola</div>
+                <div class="item-desc">Tomato, fior di latte, spicy salame, chili oil</div>
+              </div>
+              <div class="item-price">€12.00</div>
+            </div>
+            <div class="menu-item">
+              <div class="item-info">
+                <div class="item-name">Capricciosa</div>
+                <div class="item-desc">Tomato, fior di latte, ham, mushrooms, artichokes, olives</div>
+              </div>
+              <div class="item-price">€13.00</div>
+            </div>
+            <div class="menu-item">
+              <div class="item-info">
+                <div class="item-name">Salsiccia & Friarielli</div>
+                <div class="item-desc">Tomato, fior di latte, Italian sausage, friarielli</div>
+              </div>
+              <div class="item-price">€13.00</div>
+            </div>
+          </article>
+
+          <article class="menu-category">
+            <div class="category-title">
+              <div class="category-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+              </div>
+              Pizza Bianca
+            </div>
+            <div class="menu-item">
+              <div class="item-info">
+                <div class="item-name">Bianca</div>
+                <div class="item-desc">Fior di latte, rosemary, sea salt, EVOO</div>
+              </div>
+              <div class="item-price">€9.00</div>
+            </div>
+            <div class="menu-item">
+              <div class="item-info">
+                <div class="item-name">Quattro Formaggi</div>
+                <div class="item-desc">Fior di latte, gorgonzola, parmigiano, provola</div>
+              </div>
+              <div class="item-price">€13.00</div>
+            </div>
+            <div class="menu-item">
+              <div class="item-info">
+                <div class="item-name">Mortadella & Pistachio</div>
+                <div class="item-desc">Fior di latte, mortadella IGP, pistachio cream, stracciatella</div>
+              </div>
+              <div class="item-price">€14.00</div>
+            </div>
+            <div class="menu-item">
+              <div class="item-info">
+                <div class="item-name">Zucchina & Mint</div>
+                <div class="item-desc">Fior di latte, grilled zucchini, mint, lemon zest, parmigiano</div>
+              </div>
+              <div class="item-price">€12.00</div>
+            </div>
+            <div class="menu-item">
+              <div class="item-info">
+                <div class="item-name">Patate & Pancetta</div>
+                <div class="item-desc">Fior di latte, thin potato, rosemary, pancetta</div>
+              </div>
+              <div class="item-price">€11.00</div>
+            </div>
+          </article>
+
+          <article class="menu-category">
+            <div class="category-title">
+              <div class="category-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+              </div>
+              Pasta & More
+            </div>
+            <div class="menu-item">
+              <div class="item-info">
+                <div class="item-name">Cacio e Pepe</div>
+                <div class="item-desc">Tonarelli, Pecorino Romano, black pepper</div>
+              </div>
+              <div class="item-price">€12.00</div>
+            </div>
+            <div class="menu-item">
+              <div class="item-info">
+                <div class="item-name">Carbonara</div>
+                <div class="item-desc">Spaghetti, guanciale, egg yolk, Pecorino, black pepper</div>
+              </div>
+              <div class="item-price">€13.00</div>
+            </div>
+            <div class="menu-item">
+              <div class="item-info">
+                <div class="item-name">Amatriciana</div>
+                <div class="item-desc">Bucatini, guanciale, San Marzano tomato, Pecorino</div>
+              </div>
+              <div class="item-price">€13.00</div>
+            </div>
+            <div class="menu-item">
+              <div class="item-info">
+                <div class="item-name">Lasagna della Nonna</div>
+                <div class="item-desc">Fresh pasta, ragù, béchamel, Parmigiano Reggiano</div>
+              </div>
+              <div class="item-price">€14.00</div>
+            </div>
+            <div class="menu-item">
+              <div class="item-info">
+                <div class="item-name">Gnocchi Sorrentina</div>
+                <div class="item-desc">Potato gnocchi, tomato, fior di latte, basil</div>
+              </div>
+              <div class="item-price">€12.00</div>
+            </div>
+          </article>
+
+          <article class="menu-category">
+            <div class="category-title">
+              <div class="category-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+              </div>
+              Antipasti & Sides
+            </div>
+            <div class="menu-item">
+              <div class="item-info">
+                <div class="item-name">Bruschetta Classica</div>
+                <div class="item-desc">Grilled bread, tomato, garlic, basil, EVOO</div>
+              </div>
+              <div class="item-price">€6.00</div>
+            </div>
+            <div class="menu-item">
+              <div class="item-info">
+                <div class="item-name">Burrata & Prosciutto</div>
+                <div class="item-desc">Creamy burrata, Parma ham 24mo, grilled bread</div>
+              </div>
+              <div class="item-price">€12.00</div>
+            </div>
+            <div class="menu-item">
+              <div class="item-info">
+                <div class="item-name">Fritti Misti</div>
+                <div class="item-desc">Fried zucchini flowers, supplì, mozzarella sticks</div>
+              </div>
+              <div class="item-price">€9.00</div>
+            </div>
+            <div class="menu-item">
+              <div class="item-info">
+                <div class="item-name">Insalata Mista</div>
+                <div class="item-desc">Mixed leaves, cherry tomato, cucumber, red onion, EVOO</div>
+              </div>
+              <div class="item-price">€7.00</div>
+            </div>
+            <div class="menu-item">
+              <div class="item-info">
+                <div class="item-name">Patate al Forno</div>
+                <div class="item-desc">Roasted potatoes, rosemary, garlic, sea salt</div>
+              </div>
+              <div class="item-price">€5.00</div>
+            </div>
+          </article>
+
+          <article class="menu-category">
+            <div class="category-title">
+              <div class="category-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+              </div>
+              Dolci & Drinks
+            </div>
+            <div class="menu-item">
+              <div class="item-info">
+                <div class="item-name">Tiramisù</div>
+                <div class="item-desc">Classic recipe with savoiardi, mascarpone, espresso</div>
+              </div>
+              <div class="item-price">€6.00</div>
+            </div>
+            <div class="menu-item">
+              <div class="item-info">
+                <div class="item-name">Panna Cotta</div>
+                <div class="item-desc">Vanilla, mixed berry compote</div>
+              </div>
+              <div class="item-price">€5.00</div>
+            </div>
+            <div class="menu-item">
+              <div class="item-info">
+                <div class="item-name">Cannoli Siciliani</div>
+                <div class="item-desc">Ricotta, chocolate chips, pistachio, candied orange</div>
+              </div>
+              <div class="item-price">€6.00</div>
+            </div>
+            <div class="menu-item">
+              <div class="item-info">
+                <div class="item-name">San Pellegrino / Acqua Panna</div>
+                <div class="item-desc">750ml sparkling or still</div>
+              </div>
+              <div class="item-price">€3.00</div>
+            </div>
+            <div class="menu-item">
+              <div class="item-info">
+                <div class="item-name">Italian Craft Beer</div>
+                <div class="item-desc">Birra del Borgo, Baladin, or similar (330ml)</div>
+              </div>
+              <div class="item-price">€5.00</div>
+            </div>
+            <div class="menu-item">
+              <div class="item-info">
+                <div class="item-name">House Wine (Red/White)</div>
+                <div class="item-desc">Glass 150ml — ask for today's selection</div>
+              </div>
+              <div class="item-price">€4.00</div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="about" aria-labelledby="about-title">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-tag">Our Story</span>
+          <h2 id="about-title" class="font-serif">Come a Casa della Nonna</h2>
+        </div>
+        <div class="features-grid">
+          <article class="feature-card">
+            <div class="feature-icon">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+            </div>
+            <h3>Family Recipes</h3>
+            <p>Every dish comes from Nonna Ferruccio's handwritten recipe book — passed down through three generations.</p>
+          </article>
+          <article class="feature-card">
+            <div class="feature-icon">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            </div>
+            <h3>Quality Ingredients</h3>
+            <p>San Marzano DOP tomatoes, Campania fior di latte, Tuscan EVOO, Parma ham 24 months — no compromises.</p>
+          </article>
+          <article class="feature-card">
+            <div class="feature-icon">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+            </div>
+            <h3>24-Hour Dough</h3>
+            <p>Our pizza dough ferments for 24 hours — lighter, more digestible, with deep flavor you can taste.</p>
+          </article>
+          <article class="feature-card">
+            <div class="feature-icon">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            </div>
+            <h3>Delivered with Care</h3>
+            <p>Your order travels in thermal bags, arrives hot, and comes with a smile. Because delivery shouldn't mean compromise.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="delivery" aria-labelledby="delivery-title">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-tag">Delivery Info</span>
+          <h2 id="delivery-title" class="font-serif">Fast, Hot, to Your Door</h2>
+        </div>
+        <div class="features-grid">
+          <article class="feature-card">
+            <div class="feature-icon">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+            </div>
+            <h3>45 Minutes or Less</h3>
+            <p>Average delivery time 35 minutes. We'll text you when your driver is 5 minutes away.</p>
+          </article>
+          <article class="feature-card">
+            <div class="feature-icon">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            </div>
+            <h3>5km Radius</h3>
+            <p>Currently serving central Rome. Check your address at checkout — we're expanding soon!</p>
+          </article>
+          <article class="feature-card">
+            <div class="feature-icon">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="4" width="22" height="16" rx="2"/><path d="M1 10h22"/><path d="M10 4v16"/></svg>
+            </div>
+            <h3>€3 Delivery Fee</h3>
+            <p>Free delivery on orders over €30. Minimum order €15.</p>
+          </article>
+          <article class="feature-card">
+            <div class="feature-icon">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            </div>
+            <h3>Cash or Card</h3>
+            <p>Pay on delivery (cash or card) or online. Whatever's easiest for you.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact" class="cta" aria-labelledby="cta-title">
+      <div class="container">
+        <div class="cta-content">
+          <h2 id="cta-title" class="font-serif">Ready to Order?</h2>
+          <p>We're open daily 18:00–23:00. Order online, call us, or message on WhatsApp.</p>
+          <div class="hero-actions" style="justify-content: center;">
+            <a href="tel:+3906XXXXXXX" class="btn btn-primary">Call to Order</a>
+            <a href="https://wa.me/393XXXXXXXXX" class="btn btn-secondary" style="border-color: white; color: white;">WhatsApp</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="#" class="logo">Don <span>Ferruccio</span></a>
+          <p>Authentic Italian food delivery. Traditional family recipes, quality ingredients, delivered with care.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Menu</h4>
+          <ul>
+            <li><a href="#menu">Pizza</a></li>
+            <li><a href="#menu">Pasta</a></li>
+            <li><a href="#menu">Antipasti</a></li>
+            <li><a href="#menu">Dolci</a></li>
+            <li><a href="#menu">Drinks</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Info</h4>
+          <ul>
+            <li><a href="#about">Our Story</a></li>
+            <li><a href="#delivery">Delivery Areas</a></li>
+            <li><a href="#">Allergens</a></li>
+            <li><a href="#">Privacy Policy</a></li>
+            <li><a href="#">Terms of Service</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Contact</h4>
+          <ul>
+            <li><a href="tel:+3906XXXXXXX">+39 06 XXXX XXX</a></li>
+            <li><a href="mailto:ciao@donferruccio.com">ciao@donferruccio.com</a></li>
+            <li><a href="#">Via delle Botteghe Oscure 12</a></li>
+            <li><a href="#">00186 Roma, Italia</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2025 Don Ferruccio. All rights reserved. Made with amore ❤️</p>
+        <div class="social-links">
+          <a href="#" aria-label="Instagram"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
+          <a href="#" aria-label="Facebook"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>
+          <a href="#" aria-label="TripAdvisor"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Header scroll effect
+    const header = document.getElementById('header');
+    window.addEventListener('scroll', () => {
+      header.classList.toggle('scrolled', window.scrollY > 20);
+    });
+
+    // Mobile menu toggle
+    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+    const nav = document.getElementById('nav');
+    mobileMenuBtn.addEventListener('click', () => {
+      nav.classList.toggle('open');
+      mobileMenuBtn.textContent = nav.classList.contains('open') ? '✕' : '☰';
+    });
+
+    // Close mobile menu on link click
+    nav.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        nav.classList.remove('open');
+        mobileMenuBtn.textContent = '☰';
+      });
+    });
+
+    // Smooth scroll for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function(e) {
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          e.preventDefault();
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      });
+    });
+
+    // Intersection Observer for animations
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.style.animationPlayState = 'running';
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.animate-in').forEach(el => {
+      el.style.animationPlayState = 'paused';
+      observer.observe(el);
+    });
+  </script>
+</body>
+</html>
